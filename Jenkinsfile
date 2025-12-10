@@ -3,10 +3,8 @@ def jenkinsBaseUrl = env.JENKINS_URL
 def jobName = env.JOB_NAME
 def buildNumber = env.BUILD_NUMBER
 def url = "https://${jenkinsBaseUrl}/job/${jobName}/${buildNumber}/"
-def packageName = ""
 
 pipeline {
-
     agent any
 
     stages {
@@ -15,54 +13,58 @@ pipeline {
                 script {
                     sh('java -version')
                     sh('./gradlew --version')
-                    packageName = sh(returnStdout: true, script: './gradlew -s --quiet properties | grep "^name: "').trim().replace("name: ", "")
+                    echo "${url}"
 
-                    // Сначала останавливаем контейнер, если он есть (игнорируем ошибку)
-                    sh "docker stop ${packageName} || true"
-                    sh "docker rm ${packageName} || true"
+                    // Устанавливаем переменную окружения
+                    env.PACKAGE_NAME = sh(
+                        returnStdout: true,
+                        script: './gradlew -s --quiet properties | grep "^name: "'
+                    ).trim().replace("name: ", "")
+                    echo "PACKAGE_NAME = ${env.PACKAGE_NAME}"
+
+                    // Останавливаем и удаляем старый контейнер
+                    sh '''
+                        docker stop "$PACKAGE_NAME" || true
+                        docker rm "$PACKAGE_NAME" || true
+                    '''
                 }
             }
         }
 
         stage('build') {
             steps {
-                script {
-                    sh('./gradlew clean quarkusBuild -Dquarkus.package.type=native -Dquarkus.native.debug.enabled=true -Dquarkus.native.add-all-charsets=true -Dquarkus.log.level=DEBUG')
-                }
+                sh './gradlew clean quarkusBuild -Dquarkus.package.type=native -Dquarkus.native.debug.enabled=true -Dquarkus.native.add-all-charsets=true -Dquarkus.log.level=DEBUG'
             }
         }
 
         stage('docker build') {
             steps {
-                script {
-                    sh("docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/${packageName} .")
-                }
+                sh '''
+                    docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/"$PACKAGE_NAME" .
+                '''
             }
         }
 
         stage('docker run') {
             steps {
-                script {
-                    withCredentials([
-                                    string(credentialsId: 'DB_URL', variable: 'DB_URL'),
-                                    string(credentialsId: 'DB_PORT', variable: 'DB_PORT'),
-                                    string(credentialsId: 'DB_NAME', variable: 'DB_NAME'),
-                                    string(credentialsId: 'DB_USER', variable: 'DB_USER'),
-                                    string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')
-                                ])
-                    {
-                        sh '''
-                            docker run -d \
-                                --name $packageName \
-                                -p 8080:8080 \
-                                -e DB_URL=$DB_URL \
-                                -e DB_PORT=$DB_PORT \
-                                -e DB_NAME=$DB_NAME \
-                                -e DB_USER=$DB_USER \
-                                -e DB_PASSWORD=$DB_PASSWORD \
-                                quarkus/$packageName
-                        '''
-                    }
+                withCredentials([
+                    string(credentialsId: 'DB_URL', variable: 'DB_URL'),
+                    string(credentialsId: 'DB_PORT', variable: 'DB_PORT'),
+                    string(credentialsId: 'DB_NAME', variable: 'DB_NAME'),
+                    string(credentialsId: 'DB_USER', variable: 'DB_USER'),
+                    string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')
+                ]) {
+                    sh '''
+                        docker run -d \
+                            --name "$PACKAGE_NAME" \
+                            -p 8080:8080 \
+                            -e DB_URL="$DB_URL" \
+                            -e DB_PORT="$DB_PORT" \
+                            -e DB_NAME="$DB_NAME" \
+                            -e DB_USER="$DB_USER" \
+                            -e DB_PASSWORD="$DB_PASSWORD" \
+                            quarkus/"$PACKAGE_NAME"
+                    '''
                 }
             }
         }
