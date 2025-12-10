@@ -1,5 +1,6 @@
 package org.acme.resource;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -17,7 +18,8 @@ public class DBCResource {
     @GET
     @Path("/getVehicle/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getVehicle(@PathParam(value = "id") Integer id) {
+    public Uni<Response> getVehicle(@PathParam(value = "id") Integer id) {
+        // Возвращаем Uni<Response> вместо Response
         return dbcService.handleGETVehicle(id);
     }
 

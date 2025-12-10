@@ -1,15 +1,17 @@
 package org.acme.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "dbc_vehicle", schema = "dbc")
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class PgDbcVehicle extends PanacheEntityBase {
     @Id
     @Column(name = "id", nullable = false)
@@ -99,16 +101,16 @@ public class PgDbcVehicle extends PanacheEntityBase {
     @Column(name = "mssltrgtimpactradius_2", nullable = false)
     private Float msslTrgtImpactRadius2;
 
-    @Column(name = "mssltrgtarctexture")
+    @Column(name = "mssltrgtarctexture", columnDefinition = "text")
     private String msslTrgtArcTexture;
 
-    @Column(name = "mssltrgtimpacttexture")
+    @Column(name = "mssltrgtimpacttexture", columnDefinition = "text")
     private String msslTrgtImpactTexture;
 
-    @Column(name = "mssltrgtimpactmodel_1")
+    @Column(name = "mssltrgtimpactmodel_1", columnDefinition = "text")
     private String msslTrgtImpactModel1;
 
-    @Column(name = "mssltrgtimpactmodel_2")
+    @Column(name = "mssltrgtimpactmodel_2", columnDefinition = "text")
     private String msslTrgtImpactModel2;
 
     @Column(name = "camerayawoffset", nullable = false)
