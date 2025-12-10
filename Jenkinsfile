@@ -57,6 +57,7 @@ pipeline {
                     sh '''
                         docker run -d \
                             --name "$PACKAGE_NAME" \
+                            --network wowdb \
                             -p 8080:8080 \
                             -e DB_URL="$DB_URL" \
                             -e DB_PORT="$DB_PORT" \
