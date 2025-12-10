@@ -51,17 +51,17 @@ pipeline {
                                     string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')
                                 ])
                     {
-                        sh """
+                        sh '''
                             docker run -d \
                                 --name ${packageName} \
                                 -p 8080:8080 \
-                                -e DB_URL=${DB_URL} \
-                                -e DB_PORT=${DB_PORT} \
-                                -e DB_NAME=${DB_NAME} \
-                                -e DB_USER=${DB_USER} \
+                                -e DB_URL=$DB_URL \
+                                -e DB_PORT=$DB_PORT \
+                                -e DB_NAME=$DB_NAME \
+                                -e DB_USER=$DB_USER \
                                 -e DB_PASSWORD=${DB_PASSWORD} \
                                 quarkus/${packageName}
-                        """
+                        ''''
                     }
                 }
             }
