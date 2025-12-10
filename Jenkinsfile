@@ -2,7 +2,7 @@ def UUID_DIR = UUID.randomUUID().toString()
 def jenkinsBaseUrl = env.JENKINS_URL
 def jobName = env.JOB_NAME
 def buildNumber = env.BUILD_NUMBER
-def url = "https://${jenkinsBaseUrl}/job/${jobName}/${buildNumber}/"
+def url = "${jenkinsBaseUrl}/job/${jobName}/${buildNumber}/"
 
 pipeline {
     agent any
