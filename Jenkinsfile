@@ -61,7 +61,7 @@ pipeline {
                                 -e DB_USER=$DB_USER \
                                 -e DB_PASSWORD=$DB_PASSWORD \
                                 quarkus/$packageName
-                        ''''
+                        '''
                     }
                 }
             }
