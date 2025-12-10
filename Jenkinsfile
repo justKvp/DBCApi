@@ -43,7 +43,26 @@ pipeline {
         stage('docker run') {
             steps {
                 script {
-                    sh("docker run -i --rm -p 8080:8080 quarkus/${packageName}")
+                    withCredentials([
+                                    string(credentialsId: 'DB_URL', variable: 'DB_URL'),
+                                    string(credentialsId: 'DB_PORT', variable: 'DB_PORT'),
+                                    string(credentialsId: 'DB_NAME', variable: 'DB_NAME'),
+                                    string(credentialsId: 'DB_USER', variable: 'DB_USER'),
+                                    string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')
+                                ])
+                    {
+                        sh """
+                            docker run -d \
+                                --name ${packageName} \
+                                -p 8080:8080 \
+                                -e DB_URL=${DB_URL} \
+                                -e DB_PORT=${DB_PORT} \
+                                -e DB_NAME=${DB_NAME} \
+                                -e DB_USER=${DB_USER} \
+                                -e DB_PASSWORD=${DB_PASSWORD} \
+                                quarkus/${packageName}
+                        """
+                    }
                 }
             }
         }
