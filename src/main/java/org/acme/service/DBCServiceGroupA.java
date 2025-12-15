@@ -13,11 +13,11 @@ public class DBCServiceGroupA {
     public Uni<Response> handleGETAchievement(Integer id) {
         // findById теперь возвращает Uni<PgDbcAchievement>
         return PgDbcAchievement.findById(id)
-                .onItem().transform(vehicle -> {
-                    if (vehicle == null) {
+                .onItem().transform(entry -> {
+                    if (entry == null) {
                         return RUtil.notFoundedId(id);
                     }
-                    return Response.ok(vehicle).build();
+                    return Response.ok(entry).build();
                 });
     }
 }
