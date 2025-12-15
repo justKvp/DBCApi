@@ -26,6 +26,13 @@ public class DBCResource {
     }
 
     @GET
+    @Path("/getAchievementCriteria/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getAchievementCriteria(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupA.handleGETAchievementCriteria(id);
+    }
+
+    @GET
     @Path("/getVehicle/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Response> getVehicle(@PathParam(value = "id") Integer id) {

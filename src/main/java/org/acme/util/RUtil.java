@@ -9,7 +9,7 @@ public class RUtil {
     public static Response notFoundedId(Integer id) {
         CommonError error = new CommonError();
         error.setQueryId(UUID.randomUUID().toString());
-        error.setError(String.format("Запись с id [%d] отсутствует", id));
+        error.setError(String.format("Entry with ID [%d] not founded", id));
         return Response.status(Response.Status.NOT_FOUND)
                 .entity(error)
                 .build();
