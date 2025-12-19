@@ -13,9 +13,10 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-rest-jackson'
     //implementation 'io.quarkus:quarkus-rest-jaxb'
+    implementation("io.quarkus:quarkus-cache")
+    implementation 'io.quarkus:quarkus-hibernate-validator'
     implementation 'io.quarkus:quarkus-hibernate-reactive-panache'
     implementation 'io.quarkus:quarkus-reactive-pg-client'
-    implementation 'io.quarkus:quarkus-hibernate-validator'
     implementation 'io.smallrye.reactive:mutiny'
 
     testImplementation 'io.quarkus:quarkus-junit5'
