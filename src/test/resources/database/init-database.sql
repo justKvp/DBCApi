@@ -267,3 +267,23 @@ CREATE TABLE dbc.dbc_bankbagslotprices
 
 INSERT INTO dbc.dbc_bankbagslotprices (id, "cost")
 VALUES (1, 1000);
+
+CREATE TABLE dbc.dbc_bannedaddons
+(
+    id           int4 DEFAULT 0 NOT NULL,
+    namemd5_1    int8 DEFAULT 0 NOT NULL,
+    namemd5_2    int8 DEFAULT 0 NOT NULL,
+    namemd5_3    int8 DEFAULT 0 NOT NULL,
+    namemd5_4    int8 DEFAULT 0 NOT NULL,
+    versionmd5_1 int8 DEFAULT 0 NOT NULL,
+    versionmd5_2 int8 DEFAULT 0 NOT NULL,
+    versionmd5_3 int8 DEFAULT 0 NOT NULL,
+    versionmd5_4 int8 DEFAULT 0 NOT NULL,
+    lastmodified int4 DEFAULT 0 NOT NULL,
+    flags        int4 DEFAULT 0 NOT NULL,
+    CONSTRAINT pk_dbc_bannedaddons PRIMARY KEY (id)
+);
+
+INSERT INTO dbc.dbc_bannedaddons (id, namemd5_1, namemd5_2, namemd5_3, namemd5_4, versionmd5_1, versionmd5_2,
+                                  versionmd5_3, versionmd5_4, lastmodified, flags)
+VALUES (1, 3649838548, 78774415, 2550759657, 2118318316, 3649838548, 78774415, 2550759657, 2118318316, 1228172248, 2);

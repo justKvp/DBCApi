@@ -6,6 +6,7 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
 import org.acme.entity.groupb.PgDbcBankBagSlotPrices;
+import org.acme.entity.groupb.PgDbcBannedAddons;
 import org.acme.util.RUtil;
 
 @ApplicationScoped
@@ -17,6 +18,21 @@ public class DBCServiceGroupB {
     @WithSession
     public Uni<Response> handleGETBankBagSlotPrices(Integer id) {
         return PgDbcBankBagSlotPrices.findById(id)
+                .onItem().transform(entry -> {
+                    if (entry == null) {
+                        return RUtil.notFoundedId(id);
+                    }
+                    return Response.ok(entry).build();
+                });
+    }
+
+    /**
+     * dbc_bannedaddons
+     **/
+    @CacheResult(cacheName = "bannedaddons-cache")
+    @WithSession
+    public Uni<Response> handleGETBannedAddons(Integer id) {
+        return PgDbcBannedAddons.findById(id)
                 .onItem().transform(entry -> {
                     if (entry == null) {
                         return RUtil.notFoundedId(id);

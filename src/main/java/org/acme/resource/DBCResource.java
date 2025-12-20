@@ -76,6 +76,13 @@ public class DBCResource {
         return dbcServiceGroupB.handleGETBankBagSlotPrices(id);
     }
 
+    @GET
+    @Path("/getBannedAddons/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getBannedAddons(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupB.handleGETBannedAddons(id);
+    }
+
     /**
      * Group V
      **/

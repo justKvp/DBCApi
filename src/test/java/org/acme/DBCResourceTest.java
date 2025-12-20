@@ -85,6 +85,16 @@ class DBCResourceTest {
     }
 
     @Test
+    @DisplayName("dbc_bannedaddons: /dbc/getBannedAddons/1")
+    void getBannedAddons() {
+        Response response = given()
+                .when().get("/dbc/getBannedAddons/1");
+
+        Assertions.assertEquals(200, response.getStatusCode());
+        Assertions.assertEquals(3649838548L, response.jsonPath().getLong("nameMd5_1"));
+    }
+
+    @Test
     @DisplayName("healthcheck: /hello")
     void testHelloEndpoint() {
         given()
