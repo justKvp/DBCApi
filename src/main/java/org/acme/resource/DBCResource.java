@@ -49,6 +49,13 @@ public class DBCResource {
         return dbcServiceGroupA.handleGETAreaTable(id);
     }
 
+    @GET
+    @Path("/getAreaTrigger/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getAreaTrigger(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupA.handleGETAreaTrigger(id);
+    }
+
     /**
      * Group V
      **/
