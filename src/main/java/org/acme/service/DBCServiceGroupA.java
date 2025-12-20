@@ -85,4 +85,19 @@ public class DBCServiceGroupA {
                     return Response.ok(entry).build();
                 });
     }
+
+    /**
+     * dbc_auctionhouse
+     **/
+    @CacheResult(cacheName = "auctionhouse-cache")
+    @WithSession
+    public Uni<Response> handleGETAuctionHouse(Integer id) {
+        return PgDbcAuctionHouse.findById(id)
+                .onItem().transform(entry -> {
+                    if (entry == null) {
+                        return RUtil.notFoundedId(id);
+                    }
+                    return Response.ok(entry).build();
+                });
+    }
 }

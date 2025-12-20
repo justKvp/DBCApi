@@ -56,6 +56,13 @@ public class DBCResource {
         return dbcServiceGroupA.handleGETAreaTrigger(id);
     }
 
+    @GET
+    @Path("/getAuctionHouse/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getAuctionHouse(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupA.handleGETAuctionHouse(id);
+    }
+
     /**
      * Group V
      **/
