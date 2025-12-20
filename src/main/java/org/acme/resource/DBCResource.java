@@ -18,6 +18,9 @@ public class DBCResource {
     @Inject
     DBCServiceGroupV dbcServiceGroupV;
 
+    /**
+     * Group A
+     **/
     @GET
     @Path("/getAchievement/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -40,16 +43,19 @@ public class DBCResource {
     }
 
     @GET
+    @Path("/getAreaTable/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getAreaTable(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupA.handleGETAreaTable(id);
+    }
+
+    /**
+     * Group V
+     **/
+    @GET
     @Path("/getVehicle/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Response> getVehicle(@PathParam(value = "id") Integer id) {
         return dbcServiceGroupV.handleGETVehicle(id);
-    }
-
-    @GET
-    @Path("/hello")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello from Quarkus REST";
     }
 }

@@ -8,13 +8,11 @@ import jakarta.ws.rs.core.Response;
 import org.acme.entity.groupa.PgDbcAchievement;
 import org.acme.entity.groupa.PgDbcAchievementCriteria;
 import org.acme.entity.groupa.PgDbcAreaGroup;
+import org.acme.entity.groupa.PgDbcAreaTable;
 import org.acme.util.RUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @ApplicationScoped
 public class DBCServiceGroupA {
-    public static final Logger logger = LoggerFactory.getLogger("DBCServiceGroupA");
 
     /**
      * dbc_achievement
@@ -53,6 +51,21 @@ public class DBCServiceGroupA {
     @WithSession
     public Uni<Response> handleGETAreaGroup(Integer id) {
         return PgDbcAreaGroup.findById(id)
+                .onItem().transform(entry -> {
+                    if (entry == null) {
+                        return RUtil.notFoundedId(id);
+                    }
+                    return Response.ok(entry).build();
+                });
+    }
+
+    /**
+     * dbc_areatable
+     **/
+    @CacheResult(cacheName = "areatable-cache")
+    @WithSession
+    public Uni<Response> handleGETAreaTable(Integer id) {
+        return PgDbcAreaTable.findById(id)
                 .onItem().transform(entry -> {
                     if (entry == null) {
                         return RUtil.notFoundedId(id);

@@ -21,7 +21,35 @@ pipeline {
                         script: './gradlew -s --quiet properties | grep "^name: "'
                     ).trim().replace("name: ", "")
                     echo "PACKAGE_NAME = ${env.PACKAGE_NAME}"
+                }
+            }
+        }
 
+        stage('jar build') {
+            steps {
+                script {
+                    sh('./gradlew clean build -x test')
+                }
+            }
+        }
+
+        stage('unit tests') {
+            steps {
+                script {
+                    sh('./gradlew -s test')
+                }
+            }
+        }
+
+        stage('native build') {
+            steps {
+                sh './gradlew clean quarkusBuild -Dquarkus.package.type=native -Dquarkus.native.debug.enabled=true -Dquarkus.native.add-all-charsets=true -Dquarkus.log.level=DEBUG'
+            }
+        }
+
+        stage('stop and clean old') {
+            steps {
+                script {
                     // Останавливаем и удаляем старый контейнер
                     sh '''
                         docker stop "$PACKAGE_NAME" || true
@@ -31,13 +59,7 @@ pipeline {
             }
         }
 
-        stage('build') {
-            steps {
-                sh './gradlew clean quarkusBuild -Dquarkus.package.type=native -Dquarkus.native.debug.enabled=true -Dquarkus.native.add-all-charsets=true -Dquarkus.log.level=DEBUG'
-            }
-        }
-
-        stage('docker build') {
+        stage('docker build image') {
             steps {
                 sh '''
                     docker build -f src/main/docker/Dockerfile.native-micro -t quarkus/"$PACKAGE_NAME" .
