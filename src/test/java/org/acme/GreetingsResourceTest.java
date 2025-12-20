@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-@QuarkusTestResource(DBFixture.class)
+//@QuarkusTestResource(DBFixture.class)
 class GreetingsResourceTest {
     @Test
     void testHelloEndpoint() {
