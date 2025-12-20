@@ -9,12 +9,15 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.service.DBCServiceGroupA;
+import org.acme.service.DBCServiceGroupB;
 import org.acme.service.DBCServiceGroupV;
 
 @Path("/dbc")
 public class DBCResource {
     @Inject
     DBCServiceGroupA dbcServiceGroupA;
+    @Inject
+    DBCServiceGroupB dbcServiceGroupB;
     @Inject
     DBCServiceGroupV dbcServiceGroupV;
 
@@ -61,6 +64,16 @@ public class DBCResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Response> getAuctionHouse(@PathParam(value = "id") Integer id) {
         return dbcServiceGroupA.handleGETAuctionHouse(id);
+    }
+
+    /**
+     * Group B
+     **/
+    @GET
+    @Path("/getBankBagSlotPrices/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getBankBagSlotPrices(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupB.handleGETBankBagSlotPrices(id);
     }
 
     /**

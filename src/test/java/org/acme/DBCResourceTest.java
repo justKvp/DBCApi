@@ -75,6 +75,16 @@ class DBCResourceTest {
     }
 
     @Test
+    @DisplayName("dbc_bankbagslotprices: /dbc/getBankBagSlotPrices/1")
+    void getBankBagSlotPrices() {
+        Response response = given()
+                .when().get("/dbc/getBankBagSlotPrices/1");
+
+        Assertions.assertEquals(200, response.getStatusCode());
+        Assertions.assertEquals(1000, response.jsonPath().getInt("cost"));
+    }
+
+    @Test
     @DisplayName("healthcheck: /hello")
     void testHelloEndpoint() {
         given()

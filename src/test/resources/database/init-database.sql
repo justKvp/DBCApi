@@ -257,3 +257,13 @@ VALUES (1, 1, 5, 5, 'Stormwind Auction House', 'Stormwind Auction House', '스�
         'Auktionshaus von Sturmwind', '暴风城拍卖行', '暴风城拍卖行', '暴風城拍賣場', '暴風城拍賣場',
         'Casa de subastas: Ventormenta', 'Casa de subastas: Ventormenta', 'Аукционный дом Штормграда', '', '', '', '',
         16712190);
+
+CREATE TABLE dbc.dbc_bankbagslotprices
+(
+    id     int4 DEFAULT 0 NOT NULL,
+    "cost" int4 DEFAULT 0 NOT NULL,
+    CONSTRAINT dbc_bankbagslotprices_pkey PRIMARY KEY (id)
+);
+
+INSERT INTO dbc.dbc_bankbagslotprices (id, "cost")
+VALUES (1, 1000);

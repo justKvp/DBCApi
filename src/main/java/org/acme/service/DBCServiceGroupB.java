@@ -1,0 +1,27 @@
+package org.acme.service;
+
+import io.quarkus.cache.CacheResult;
+import io.quarkus.hibernate.reactive.panache.common.WithSession;
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.core.Response;
+import org.acme.entity.groupb.PgDbcBankBagSlotPrices;
+import org.acme.util.RUtil;
+
+@ApplicationScoped
+public class DBCServiceGroupB {
+    /**
+     * dbc_bankbagslotprices
+     **/
+    @CacheResult(cacheName = "bankbagslotprices-cache")
+    @WithSession
+    public Uni<Response> handleGETBankBagSlotPrices(Integer id) {
+        return PgDbcBankBagSlotPrices.findById(id)
+                .onItem().transform(entry -> {
+                    if (entry == null) {
+                        return RUtil.notFoundedId(id);
+                    }
+                    return Response.ok(entry).build();
+                });
+    }
+}
