@@ -36,7 +36,23 @@ pipeline {
         stage('unit tests') {
             steps {
                 script {
-                    sh('./gradlew -s test')
+                    withCredentials([
+                        string(credentialsId: 'DB_URL', variable: 'DB_URL'),
+                        string(credentialsId: 'DB_PORT', variable: 'DB_PORT'),
+                        string(credentialsId: 'DB_NAME', variable: 'DB_NAME'),
+                        string(credentialsId: 'DB_USER', variable: 'DB_USER'),
+                        string(credentialsId: 'DB_PASSWORD', variable: 'DB_PASSWORD')
+                    ]) {
+                        sh '''
+                            ./gradlew -s test \
+                            -DDB_URL="$DB_URL" \
+                            -DDB_PORT="$DB_PORT" \
+                            -DDB_PORT="$DB_PORT" \
+                            -DDB_NAME="$DB_NAME" \
+                            -DDB_USER="$DB_USER" \
+                            -DDB_PASSWORD="$DB_PASSWORD"
+                        '''
+                    }
                 }
             }
         }
