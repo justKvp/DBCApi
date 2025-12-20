@@ -4,7 +4,7 @@ import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
-import org.acme.entity.PgDbcVehicle;
+import org.acme.entity.groupv.PgDbcVehicle;
 import org.acme.util.RUtil;
 
 @ApplicationScoped

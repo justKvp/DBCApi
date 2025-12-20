@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 
 @RegisterForReflection
@@ -19,7 +18,7 @@ public class CommonError {
             pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",
             timezone = "UTC"
     )
-    private Timestamp createdAt = Timestamp.from(Instant.now());
+    private Instant createdAt = Instant.now();
 
     @JsonProperty("query_id")
     private String queryId;

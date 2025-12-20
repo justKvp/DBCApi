@@ -1,4 +1,4 @@
-package org.acme.entity;
+package org.acme.entity.groupa;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import jakarta.persistence.Column;

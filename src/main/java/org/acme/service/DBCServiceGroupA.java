@@ -5,8 +5,9 @@ import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
-import org.acme.entity.PgDbcAchievement;
-import org.acme.entity.PgDbcAchievementCriteria;
+import org.acme.entity.groupa.PgDbcAchievement;
+import org.acme.entity.groupa.PgDbcAchievementCriteria;
+import org.acme.entity.groupa.PgDbcAreaGroup;
 import org.acme.util.RUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,21 @@ public class DBCServiceGroupA {
     @WithSession
     public Uni<Response> handleGETAchievementCriteria(Integer id) {
         return PgDbcAchievementCriteria.findById(id)
+                .onItem().transform(entry -> {
+                    if (entry == null) {
+                        return RUtil.notFoundedId(id);
+                    }
+                    return Response.ok(entry).build();
+                });
+    }
+
+    /**
+     * dbc_areagroup
+     **/
+    @CacheResult(cacheName = "areagroup-cache")
+    @WithSession
+    public Uni<Response> handleGETAreaGroup(Integer id) {
+        return PgDbcAreaGroup.findById(id)
                 .onItem().transform(entry -> {
                     if (entry == null) {
                         return RUtil.notFoundedId(id);

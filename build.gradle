@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'io.quarkus'
+    id 'io.quarkus' version "${quarkusVersion}"
 }
 
 repositories {
@@ -9,7 +9,9 @@ repositories {
 }
 
 dependencies {
-    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation enforcedPlatform(
+            "io.quarkus.platform:quarkus-bom:${quarkusVersion}"
+    )
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-rest-jackson'
     //implementation 'io.quarkus:quarkus-rest-jaxb'
@@ -27,18 +29,31 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
 }
 
-group = 'org.acme'
-version = '1.0.0-SNAPSHOT'
+group = project.group
+version = project.version
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+tasks.test {
+    // Показывать в консоли каждый тест при выполнении
+    testLogging {
+        events "passed", "skipped", "failed"  // какие события выводить
+        showStandardStreams = true             // показывать System.out / System.err
+        exceptionFormat = 'full'               // полный стектрейс при падении
+    }
+}
+
 test {
     systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
     jvmArgs "--add-opens", "java.base/java.lang=ALL-UNNAMED"
+
+    useJUnitPlatform()
+    exclude '**/*IT*' // пропустить все интеграционные тесты
 }
+
 compileJava {
     options.encoding = 'UTF-8'
     options.compilerArgs << '-parameters'

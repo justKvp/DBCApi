@@ -33,6 +33,13 @@ public class DBCResource {
     }
 
     @GET
+    @Path("/getAreaGroup/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getAreaGroup(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupA.handleGETAreaGroup(id);
+    }
+
+    @GET
     @Path("/getVehicle/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Response> getVehicle(@PathParam(value = "id") Integer id) {
