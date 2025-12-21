@@ -111,6 +111,16 @@ class DBCResourceTest {
     }
 
     @Test
+    @DisplayName("dbc_battlemasterlist: /dbc/getBattlemasterList/1")
+    void getBattlemasterList() {
+        Response response = given()
+                .when().get("/dbc/getBattlemasterList/1");
+
+        Assertions.assertEquals(200, response.getStatusCode());
+        Assertions.assertEquals("Alterac Valley", response.jsonPath().getString("nameLangEnus"));
+    }
+
+    @Test
     @DisplayName("healthcheck: /hello")
     void testHelloEndpoint() {
         given()

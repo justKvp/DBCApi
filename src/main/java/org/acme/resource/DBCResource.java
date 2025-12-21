@@ -90,6 +90,13 @@ public class DBCResource {
         return dbcServiceGroupB.handleGETBarbershopStyle(id);
     }
 
+    @GET
+    @Path("/getBattlemasterList/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getBattlemasterList(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupB.handleGETBattlemasterList(id);
+    }
+
     /**
      * Group V
      **/
