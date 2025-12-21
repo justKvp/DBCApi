@@ -83,6 +83,13 @@ public class DBCResource {
         return dbcServiceGroupB.handleGETBannedAddons(id);
     }
 
+    @GET
+    @Path("/getBarbershopStyle/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getBarbershopStyle(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupB.handleGETBarbershopStyle(id);
+    }
+
     /**
      * Group V
      **/

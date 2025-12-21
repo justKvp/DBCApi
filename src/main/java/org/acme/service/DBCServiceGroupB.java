@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
 import org.acme.entity.groupb.PgDbcBankBagSlotPrices;
 import org.acme.entity.groupb.PgDbcBannedAddons;
+import org.acme.entity.groupb.PgDbcBarbershopStyle;
 import org.acme.util.RUtil;
 
 @ApplicationScoped
@@ -33,6 +34,21 @@ public class DBCServiceGroupB {
     @WithSession
     public Uni<Response> handleGETBannedAddons(Integer id) {
         return PgDbcBannedAddons.findById(id)
+                .onItem().transform(entry -> {
+                    if (entry == null) {
+                        return RUtil.notFoundedId(id);
+                    }
+                    return Response.ok(entry).build();
+                });
+    }
+
+    /**
+     * dbc_barbershopstyle
+     **/
+    @CacheResult(cacheName = "barbershopstyle-cache")
+    @WithSession
+    public Uni<Response> handleGETBarbershopStyle(Integer id) {
+        return PgDbcBarbershopStyle.findById(id)
                 .onItem().transform(entry -> {
                     if (entry == null) {
                         return RUtil.notFoundedId(id);

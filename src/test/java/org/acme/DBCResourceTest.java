@@ -14,6 +14,9 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 @QuarkusTestResource(DBFixture.class)
 class DBCResourceTest {
+    /**
+     * Group A
+     **/
     @Test
     @DisplayName("dbc_achievement: /dbc/getAchievement/6")
     void getAchievement() {
@@ -74,6 +77,9 @@ class DBCResourceTest {
         Assertions.assertEquals("Stormwind Auction House", response.jsonPath().getString("nameLangEnus"));
     }
 
+    /**
+     * Group B
+     **/
     @Test
     @DisplayName("dbc_bankbagslotprices: /dbc/getBankBagSlotPrices/1")
     void getBankBagSlotPrices() {
@@ -92,6 +98,16 @@ class DBCResourceTest {
 
         Assertions.assertEquals(200, response.getStatusCode());
         Assertions.assertEquals(3649838548L, response.jsonPath().getLong("nameMd5_1"));
+    }
+
+    @Test
+    @DisplayName("dbc_barbershopstyle: /dbc/getBarbershopStyle/3")
+    void getBarbershopStyle() {
+        Response response = given()
+                .when().get("/dbc/getBarbershopStyle/3");
+
+        Assertions.assertEquals(200, response.getStatusCode());
+        Assertions.assertEquals("Long", response.jsonPath().getString("displaynameLangEnus"));
     }
 
     @Test
