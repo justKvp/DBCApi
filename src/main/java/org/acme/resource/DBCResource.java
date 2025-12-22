@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.service.DBCServiceGroupA;
 import org.acme.service.DBCServiceGroupB;
+import org.acme.service.DBCServiceGroupC;
 import org.acme.service.DBCServiceGroupV;
 
 @Path("/dbc")
@@ -18,6 +19,8 @@ public class DBCResource {
     DBCServiceGroupA dbcServiceGroupA;
     @Inject
     DBCServiceGroupB dbcServiceGroupB;
+    @Inject
+    DBCServiceGroupC dbcServiceGroupC;
     @Inject
     DBCServiceGroupV dbcServiceGroupV;
 
@@ -95,6 +98,16 @@ public class DBCResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Uni<Response> getBattlemasterList(@PathParam(value = "id") Integer id) {
         return dbcServiceGroupB.handleGETBattlemasterList(id);
+    }
+
+    /**
+     * Group C
+     **/
+    @GET
+    @Path("/getCharacterFacialHairStyles/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getCharacterFacialHairStyles(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupC.handleGETCharacterFacialHairStyles(id);
     }
 
     /**

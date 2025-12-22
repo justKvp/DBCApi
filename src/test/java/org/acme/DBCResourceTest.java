@@ -120,6 +120,19 @@ class DBCResourceTest {
         Assertions.assertEquals("Alterac Valley", response.jsonPath().getString("nameLangEnus"));
     }
 
+    /**
+     * Group C
+     **/
+    @Test
+    @DisplayName("dbc_characterfacialhairstyles: /dbc/getCharacterFacialHairStyles/1")
+    void getCharacterFacialHairStyles() {
+        Response response = given()
+                .when().get("/dbc/getCharacterFacialHairStyles/1");
+
+        Assertions.assertEquals(200, response.getStatusCode());
+        Assertions.assertEquals(1, response.jsonPath().getInt("raceId"));
+    }
+
     @Test
     @DisplayName("healthcheck: /hello")
     void testHelloEndpoint() {

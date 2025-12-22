@@ -393,3 +393,20 @@ INSERT INTO dbc.dbc_battlemasterlist (id, mapid_1, mapid_2, mapid_3, mapid_4, ma
 VALUES (1, 30, -1, -1, -1, -1, -1, -1, -1, 3, 1, 'Alterac Valley', 'Alterac Valley', '알터랙 계곡', 'Vallée d''Alterac',
         'Alteractal', '奥特兰克山谷', '奥特兰克山谷', '奧特蘭克山谷', '奧特蘭克山谷', 'Valle de Alterac',
         'Valle de Alterac', 'Альтеракская долина', '', '', '', '', 16712190, 5, 1941, 51, 80);
+
+CREATE TABLE dbc.dbc_characterfacialhairstyles
+(
+    id          int4 DEFAULT 0 NOT NULL,
+    raceid      int4 DEFAULT 0 NOT NULL,
+    sexid       int4 DEFAULT 0 NOT NULL,
+    variationid int4 DEFAULT 0 NOT NULL,
+    geoset_1    int4 DEFAULT 0 NOT NULL,
+    geoset_2    int4 DEFAULT 0 NOT NULL,
+    geoset_3    int4 DEFAULT 0 NOT NULL,
+    geoset_4    int4 DEFAULT 0 NOT NULL,
+    geoset_5    int4 DEFAULT 0 NOT NULL,
+    CONSTRAINT pk_dbc_characterfacialhairstyles PRIMARY KEY (id)
+);
+INSERT INTO dbc.dbc_characterfacialhairstyles (id, raceid, sexid, variationid, geoset_1, geoset_2, geoset_3, geoset_4,
+                                               geoset_5)
+VALUES (1, 1, 0, 1, 1, 2, 1, 0, 0);
