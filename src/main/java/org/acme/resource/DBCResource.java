@@ -110,6 +110,13 @@ public class DBCResource {
         return dbcServiceGroupC.handleGETCharacterFacialHairStyles(id);
     }
 
+    @GET
+    @Path("/getCharSections/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Uni<Response> getCharSections(@PathParam(value = "id") Integer id) {
+        return dbcServiceGroupC.handleGETCharSections(id);
+    }
+
     /**
      * Group V
      **/

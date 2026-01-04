@@ -5,6 +5,7 @@ import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
+import org.acme.entity.groupc.PgDbcCharSections;
 import org.acme.entity.groupc.PgDbcCharacterFacialHairStyles;
 import org.acme.util.RUtil;
 
@@ -17,6 +18,21 @@ public class DBCServiceGroupC {
     @WithSession
     public Uni<Response> handleGETCharacterFacialHairStyles(Integer id) {
         return PgDbcCharacterFacialHairStyles.findById(id)
+                .onItem().transform(entry -> {
+                    if (entry == null) {
+                        return RUtil.notFoundedId(id);
+                    }
+                    return Response.ok(entry).build();
+                });
+    }
+
+    /**
+     * dbc_charsections
+     **/
+    @CacheResult(cacheName = "charsections-cache")
+    @WithSession
+    public Uni<Response> handleGETCharSections(Integer id) {
+        return PgDbcCharSections.findById(id)
                 .onItem().transform(entry -> {
                     if (entry == null) {
                         return RUtil.notFoundedId(id);

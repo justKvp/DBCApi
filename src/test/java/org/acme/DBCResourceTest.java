@@ -134,6 +134,16 @@ class DBCResourceTest {
     }
 
     @Test
+    @DisplayName("dbc_charsections: /dbc/getCharSections/1")
+    void getCharSections() {
+        Response response = given()
+                .when().get("/dbc/getCharSections/1");
+
+        Assertions.assertEquals(200, response.getStatusCode());
+        Assertions.assertEquals("Character\\Human\\Male\\HumanMaleSkin00_00.blp", response.jsonPath().getString("textureName1"));
+    }
+
+    @Test
     @DisplayName("healthcheck: /hello")
     void testHelloEndpoint() {
         given()

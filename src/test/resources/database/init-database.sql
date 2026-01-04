@@ -410,3 +410,21 @@ CREATE TABLE dbc.dbc_characterfacialhairstyles
 INSERT INTO dbc.dbc_characterfacialhairstyles (id, raceid, sexid, variationid, geoset_1, geoset_2, geoset_3, geoset_4,
                                                geoset_5)
 VALUES (1, 1, 0, 1, 1, 2, 1, 0, 0);
+
+CREATE TABLE dbc.dbc_charsections
+(
+    id             int4 DEFAULT 0 NOT NULL,
+    raceid         int4 DEFAULT 0 NOT NULL,
+    sexid          int4 DEFAULT 0 NOT NULL,
+    basesection    int4 DEFAULT 0 NOT NULL,
+    texturename_1  text NULL,
+    texturename_2  text NULL,
+    texturename_3  text NULL,
+    flags          int4 DEFAULT 0 NOT NULL,
+    variationindex int4 DEFAULT 0 NOT NULL,
+    colorindex     int4 DEFAULT 0 NOT NULL,
+    CONSTRAINT pk_dbc_charsections PRIMARY KEY (id)
+);
+INSERT INTO dbc.dbc_charsections
+(id, raceid, sexid, basesection, texturename_1, texturename_2, texturename_3, flags, variationindex, colorindex)
+VALUES (1, 1, 0, 0, 'Character\Human\Male\HumanMaleSkin00_00.blp', '', '', 17, 0, 0);
