@@ -21,7 +21,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-reactive-pg-client'
     implementation 'io.smallrye.reactive:mutiny'
 
-    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.quarkus:quarkus-junit'
     testImplementation 'io.rest-assured:rest-assured'
 
     // Lombok
@@ -29,8 +29,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
     // --- Testcontainers ---
-    testImplementation 'org.testcontainers:junit-jupiter:1.21.4'
-    testImplementation 'org.testcontainers:postgresql:1.21.4'
+    testImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.3'
+    testImplementation 'org.testcontainers:testcontainers-postgresql:2.0.3'
     //testImplementation "org.testcontainers:kafka:1.21.4"
     // JDBC драйвер для Testcontainers
     testImplementation 'org.postgresql:postgresql:42.7.3'
@@ -64,8 +64,10 @@ test {
 compileJava {
     options.encoding = 'UTF-8'
     options.compilerArgs << '-parameters'
+    //options.compilerArgs += "-Xlint:deprecation"
 }
 
 compileTestJava {
     options.encoding = 'UTF-8'
+    //options.compilerArgs += "-Xlint:deprecation"
 }
